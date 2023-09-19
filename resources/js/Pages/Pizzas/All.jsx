@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 const columns = [
-    'size', 'status'
+    'size', 'chef', 'status'
 ]
 export default function All({ auth, pizzas }) {
 
