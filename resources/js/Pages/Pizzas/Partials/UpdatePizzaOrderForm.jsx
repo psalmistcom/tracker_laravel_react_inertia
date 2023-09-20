@@ -8,18 +8,20 @@ import SelectInput from "@/Components/SelectInput.jsx";
 
 export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
 
-    // const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
-    //     size: pizza.size,
-    //     crust: pizza.crust,
-    //     toppings: pizza.toppings.join(', '),
-    //     status: pizza.status
-    // });
+    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+        size: pizza.size,
+        crust: pizza.crust,
+        toppings: pizza.toppings.join(', '),
+        status: pizza.status
+    });
 
-    // const submit = (e) => {
-    //     e.preventDefault();
+    const submit = (e) => {
+        e.preventDefault();
 
-    //     patch(route('pizzas.update', pizza.id));
-    // };
+        patch(route('pizzas.update', pizza.id), {
+            preserveScroll: true
+        });
+    };
 
     const statusOptions = [
         'Ordered',
@@ -35,12 +37,12 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Order Information</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    Update only the status of the form. Others are disabled!
                 </p>
             </header>
 
             <form
-                // onSubmit={submit}
+                onSubmit={submit}
                 className="mt-6 space-y-6"
             >
                 <div>
@@ -49,7 +51,7 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                     <TextInput
                         id="size"
                         className="mt-1 block w-full"
-                        value={pizza.size}
+                        value={data.size}
                         disabled
                     />
                 </div>
@@ -60,7 +62,7 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                     <TextInput
                         id="crust"
                         className="mt-1 block w-full"
-                        value={pizza.crust}
+                        value={data.crust}
                         disabled
                     />
                 </div>
@@ -71,7 +73,7 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                     <TextInput
                         id="name"
                         className="mt-1 block w-full"
-                        value={pizza.toppings.join(', ')}
+                        value={data.toppings}
                         disabled
                     />
                 </div>
@@ -83,18 +85,15 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                         id="status"
                         className="mt-1 block w-full"
                         options={statusOptions}
-                        value={pizza.status}
-                    // onChange={(e) => setData('status', e.target.value)}
+                        value={data.status}
+                        onChange={(e) => setData('status', e.target.value)}
                     />
 
-                    <InputError className="mt-2" />
-                    {/* <InputError className="mt-2" message={errors.status} /> */}
+                    <InputError className="mt-2" message={errors.status} />
                 </div>
 
+
                 <div className="flex items-center gap-4">
-                    <PrimaryButton> Save Changes</PrimaryButton>
-                </div>
-                {/* <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Save Changes</PrimaryButton>
 
                     <Transition
@@ -106,7 +105,7 @@ export default function UpdatePizzaOrderForm({ pizza, className = '' }) {
                     >
                         <p className="text-sm text-gray-600">Saved.</p>
                     </Transition>
-                </div> */}
+                </div>
             </form>
         </section>
     );
